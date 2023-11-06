@@ -60,11 +60,11 @@ public class ArrayTests {
 
 ![Image](1-1-fail1.PNG)
 ![Image](1-1-fail2.PNG)
-**These two are the failure inputs** 
+**These two are the symptom of failure inputs** 
 
 
 ![Image](1-2-sucess.PNG)
-**this is success input when the code still has bugs**
+**This is the symptom of success input when the code still has bugs**
 
 ``` bash
 // Before fixing!
@@ -116,7 +116,7 @@ public class ArrayExamples {
     int temp;
     for(int i = 0; i < arr.length/2; i += 1) { // input = 1,2,3
       temp = arr[arr.length -i - 1]; // 3        
-      arr[arr.length -i - 1] = arr[i];  //     1    // It swich again and make everything the same
+      arr[arr.length -i - 1] = arr[i];  //     1   
       arr[i] = temp;                 // 3    
       //temp = arr[i];
 
@@ -166,15 +166,102 @@ public class ArrayExamples {
 2. reversed: I just rearranged the old array into the new array with the back-to-front method.
 3. averageWithoutLowest: I only need to make sure that the program will skip the duplicate of the lowest value by adding count so that it will only switch one time.
 
-![Image](3-1.JPG)
 
-* The method handleRequest is called
-* The argument is URI url. The values are ArrayList<String> s, int num, URI url, String[] parameters, String mess, and String print.
-* The values that change are the parameters that get string input from the user, String print that will contain new string make up of the user input without '+' character, ArrayList<String> s that will add the string in print into the array of string (in this case: "Hello"), and the num increase by 1.
+## Part 2 - Researching Commands
 
+## find command
+1. find directory -name file.txt
+> Search for files that are specified by ‘file.txt’ = search for this specific file
+``` bash
+// First example
+Mark@DESKTOP-OJL6LKL MINGW64 ~/VS_Code/CSE_15L/docsearch/technical (main)
+$ find plos/ -name "*.txt" > file-result.txt
+plos/journal.pbio.0020001.txt
+plos/journal.pbio.0020010.txt
+plos/journal.pbio.0020012.txt
+plos/journal.pbio.0020013.txt
+plos/journal.pbio.0020019.txt
+plos/journal.pbio.0020028.txt
+plos/journal.pbio.0020035.txt
+...
+plos/pmed.0020275.txt
+plos/pmed.0020278.txt
+plos/pmed.0020281.txt
+```
 
-## Part 2 "SSH key"
+``` bash
+// Second example
+Mark@DESKTOP-OJL6LKL MINGW64 ~/VS_Code/CSE_15L/docsearch/technical (main)
+$ find plos/ -name "pmed.0020239.txt" 
+plos/pmed.0020239.txt
+```
 
-![Image](3-5com.JPG)
+2. find directory -empty
+>  Search for empty files and directories. Because there are no empty files in /technical, I create sample.txt in plos, and the command find it
+``` bash
+// First example
+Mark@DESKTOP-OJL6LKL MINGW64 ~/VS_Code/CSE_15L/docsearch/technical (main)
+$ find . -empty
+```
 
-ls command just shows where the private and public key is in this computer
+``` bash
+// Second example
+Mark@DESKTOP-OJL6LKL MINGW64 ~/VS_Code/CSE_15L/docsearch/technical (main)
+$ find plos -empty
+plos/sample.txt
+```
+
+3. find directory -type d
+> This command displays all the repositories and sub-repositories present in the current repository.
+```
+// First example
+Mark@DESKTOP-OJL6LKL MINGW64 ~/VS_Code/CSE_15L/docsearch/technical (main)
+$ find . -type d 
+.
+./911report
+./biomed
+./government
+./government/About_LSC
+./government/Alcohol_Problems
+./government/Env_Prot_Agen
+./government/Gen_Account_Office
+./government/Media
+./government/Post_Rate_Comm
+./plos
+```
+
+``` bash
+// Second example
+Mark@DESKTOP-OJL6LKL MINGW64 ~/VS_Code/CSE_15L/docsearch/technical (main)
+$ find government/ -type d
+government/
+government/About_LSC
+government/Alcohol_Problems
+government/Env_Prot_Agen
+government/Gen_Account_Office
+government/Media
+government/Post_Rate_Comm
+```
+
+4. find directory -newer directory/file
+>  Search for files that were modified/created after ‘file’. I create sample.txt and sample2.txt before file-result.txt, and the command is able to detect that I go in to 911report and government to create those 2 files.
+```
+// First example
+Mark@DESKTOP-OJL6LKL MINGW64 ~/VS_Code/CSE_15L/docsearch/technical (main)
+$ find ./ -newer file-result.txt 
+./911report
+./911report/sample.txt
+./government
+./government/sample2.txt
+./plos
+```
+
+``` bash
+// Second example
+Mark@DESKTOP-OJL6LKL MINGW64 ~/VS_Code/CSE_15L/docsearch/technical (main)
+$ find ./ -newer 911report/
+./government
+./government/sample2.txt
+```
+
+**All the information come from: https://www.geeksforgeeks.org/find-command-in-linux-with-examples/**
